@@ -85,15 +85,21 @@ Till gruppen A-ARBETSAREOR lägger vi till
 Och i Procedure Division skriver vi
 ```COBOL
 ACCEPT A-NAMN
+DISPLAY A-NAMN
 ```
 Innan vi kör programmet nu så måste vi ange ett namn. Det gör vi i rutan Stdin Inputs:
 
 ![Stdin](Stdin.PNG)
 
-asdasda
+Execute!
 
-### Si eller så?
+Ser det rätt ut så långt så **lägger vi på samma sätt till variabeln A-ALDER och hämtar in användarens ålder i koden**. **Hur ska A-ALDER vara deklarerad?**
 
+### Ett riktigt program
+Nu ska vi skriva ett riktigt program :-) Vi ska till att börja med utvärdera användarens ålder och avgöra om hon är gammal nog att få köra bil (minst arton), eller inte.
+För det måste vi förstås ta in uppgifter om användaren (*input*) och leverera en rapport (*output*).
+Skriv in följande i Working Storage:
+```COBOL
 01 UTVARDERING.
    05 RUBRIK.
       10 FILLER    PIC X(8) VALUE "RAPPORT ".
@@ -101,12 +107,32 @@ asdasda
       10 FILLER    PIC X(4) VALUE SPACE.
       10 NAMN      PIC X(40).
    05 RESULTAT.
-      10 
-      
-MOVE DATUM TO DATUM-RED
-DISPLAY DATUM-RED
+      10 FILLER    PIC X(7) VALUE 'Du får '.
+      10 JA-NEJ    PIC X(5) VALUE '...  '.
+      10 FILLER    PIC X(9) VALUE 'köra bil.'
+```
+Denna grupp använder vi i vår rapport.
+"FILLER" tar upp minne, men går inte att manipulera. Vilket kan vara rätt så användbart faktiskt.
 
-COBOL har flera sådana formateringstrick, men det bör nog poängteras att numera är COBOL ett *back-end-språk* och presentationslagret skrivs sannolikt i något annat programmeringsspråk.
+I COBOL, liksom i alla programmeringsspråk, kan man välja väg i programmet beroende på *villkor* med **_IF-THEN-ELSE_**. Det kan se ut såhär:
+```COBOL
+IF A-ALDER >= 18 THEN *> Detta är en kommentar om att ">=" betyder "större än eller lika med".
+   CONTINUE
+ELSE
+   MOVE 'INTE' TO JA-NEJ
+END-IF
+```
+"CONTINUE" här betyder "gör ingenting". Även det nog så användbart, tro det eller ej.
+
+Lägg också till detta i koden:
+```COBOL
+MOVE A-DATUM TO DATUM-RED
+DISPLAY RUBRIK
+DISPLAY RESULTAT
+```
+Exekvera programmet. Hur gick det?
+
+(Ser du hur datumet skrevs ut? COBOL har flera sådana formateringstrick, men det bör nog poängteras att numera är COBOL ett *backend-språk* och presentationslagret skrivs sannolikt i något annat programmeringsspråk.)
 
 ### FizzBuzz
 Nu har du lärt dig tillräckligt mycket för att lösa den klassiska programmeringsnöten FizzBuzz.
