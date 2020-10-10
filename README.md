@@ -26,17 +26,53 @@ Under **_Procedure Division_** har vi själva koden som gör något. Den avsluta
 ### Aritmetik
 Låt oss bygga på med lite mer matte :-) **Ta bort all kod under Procedure Division** (förutom STOP RUN.).
 Skriv eller klistra in följande kod istället
-<code>
+```COBOL
 MOVE 10 TO X
 ADD 1 TO X
 SUBTRACT 1 FROM X
 MULTIPLY 6 BY X
 DIVIDE 3 INTO X
-</code>
+DISPLAY "X="X
+```
+Vad kommer X vara när programmet kört klart? **Klicka på Execute så får vi se!**
 
-I alla dessa fall kommer X att förändras. 
+### Aritmetik, forts.
+Som vi redan sett kan resultatet av en matematisk operation sparas i en annan variabel med <code>GIVING</code>. Vi testar att skriva om vår DIVIDE såhär:<br />
+```COBOL
+DIVIDE X BY 3 GIVING Y REMAINDER Z
+```
+Och vår DISPLAY såhär:
+```COBOL
+DISPLAY "X="X " Y="Y " Z="Z
+```
+Vad kommer X, Y och Z ha för värden?
+Vad betyder det att Z är noll?
+
+När man har att göra med mer komplicerade matematiska uttryck kan man ta till <code>COMPUTE</code>. Man kan faktiskt ersätta vår tidigare kod med följande och få samma resultat:
+```COBOL
+MOVE 10 TO X
+COMPUTE Y = (((X + 1) - 1) * 6) / 3
+DISPLAY "Y="Y
+```
+Klistra in koden ovan innan STOP RUN., klicka på Execute och se efter.
+
+Vilken kod var lättast att läsa och förstå?
 
 ### Inmatning
+Vi har kommit en bit i vår förståelse av programmering. Men ett program blir förstås mera värdefullt om det kan interagera med omvärlden.
+För att ta in värden till variabler i COBOL-programmet används <code>ACCEPT</code>. Men först måste vi ha en lämplig variabel.
+I Working Storage, skriv in följande
+```COBOL
+01 A-ARBETSAREOR.
+   05 A-DATUM   PIC X(8).
+01 UTVARDERING.
+   05 RUBRIK.
+      10 DATUM-RED PIC 9999/99/99.
+      10 FILLER    PIC X(4) VALUE SPACE.
+      10 NAMN      PIC X(40).
+   05 RESULTAT.
+      10 
+```
 ACCEPT DATUM FROM DATE
 MOVE DATUM TO DATUM-RED
 DISPLAY DATUM-RED
