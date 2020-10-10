@@ -74,9 +74,23 @@ Och nu kan vi koda såhär:
 ACCEPT A-DATUM FROM DATE YYYYMMDD
 DISPLAY "Dagens datum: "A-DATUM
 ```
+Execute!
 
 ### Inmatning forts.
-Nu ska vi hämta in ett värde från
+Nu ska vi hämta in ett värde från användaren av programmet. Det är du :-)
+Till gruppen A-ARBETSAREOR lägger vi till
+```COBOL
+   05 A-NAMN       PIC X(40).
+```
+Och i Procedure Division skriver vi
+```COBOL
+ACCEPT A-NAMN
+```
+Innan vi kör programmet nu så måste vi ange ett namn. Det gör vi i rutan Stdin Inputs:
+
+![Stdin](Stdin.PNG)
+
+asdasda
 
 ### Si eller så?
 
