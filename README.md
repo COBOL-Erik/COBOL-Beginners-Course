@@ -16,14 +16,23 @@ Ser koden kanske lite konstigt ut? När man designade språket COBOL var det vik
 
 Det är alltså meningen att det ska vara lätt att läsa COBOL. Det syns inte minst i kodraden
 <code>ADD X Y GIVING Z</code>. Ganska självklart vad som händer här, inte sant?
-Även om du aldrig sett COBOL eller annan kod förut kan du kanske gissa vad detta lilla program gör? När du funderat en stund över det kan du <b>klicka på den blå Execute-knappen</b>, så körs programmet. Vad fick du för resultat i den svarta Result-rutan?
+Även om du aldrig sett COBOL eller annan kod förut kan du kanske gissa vad detta lilla program gör? När du funderat en stund över det kan du **klicka på den blå Execute-knappen**, så körs programmet. Vad fick du för resultat i den svarta Result-rutan?
+
+### Working storage och Procedure Division
+Det står **_Working Storage_** i koden. Härunder *deklarerar man sina variabler*. En variabel är ett namn på ett stycke minne. <code>X PIC 99.</code> betyder "variabeln X är två bytes minne med två siffror".
+
+Under **_Procedure Division_** har vi själva koden som gör något. Den avslutas här med <code>STOP RUN.</code> som alltid kan få stå kvar (inklusive punkten!) sist i programmet.
 
 ### Aritmetik
-Låt oss bygga på med lite mer matte :-) Såhär kan man skriva de fyra räknesätten i COBOL:<br />
-<code>ADD 1 TO X</code><br />
-<code>SUBTRACT 1 FROM X</code><br />
-<code>MULTIPLY 6 BY X</code><br />
-<code>DIVIDE 3 INTO X</code>
+Låt oss bygga på med lite mer matte :-) **Ta bort all kod under Procedure Division** (förutom STOP RUN.).
+Skriv eller klistra in följande kod istället
+<code>
+MOVE 10 TO X
+ADD 1 TO X
+SUBTRACT 1 FROM X
+MULTIPLY 6 BY X
+DIVIDE 3 INTO X
+</code>
 
 I alla dessa fall kommer X att förändras. 
 
