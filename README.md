@@ -48,6 +48,7 @@ DISPLAY "X="X " Y="Y " Z="Z
 Vad kommer X, Y och Z ha för värden?
 Vad betyder det att Z är noll?
 
+
 När man har att göra med mer komplicerade matematiska uttryck kan man ta till <code>COMPUTE</code>. Man kan faktiskt ersätta vår tidigare kod med följande och få samma resultat:
 ```COBOL
 MOVE 10 TO X
@@ -64,17 +65,61 @@ För att ta in värden till variabler i COBOL-programmet används <code>ACCEPT</
 I Working Storage, skriv in följande
 ```COBOL
 01 A-ARBETSAREOR.
-   05 A-DATUM   PIC X(8).
+   05 A-DATUM      PIC X(8).
+```
+Här har vi deklarerat en gruppvariabel A-ARBETSAREOR med ett enda fält, A-DATUM, som är åtta *alfanumeriska tecken* långt. Det är en bra praxis att sortera in sina variabler på detta vis i COBOL!
+
+Och nu kan vi koda såhär:
+```COBOL
+ACCEPT A-DATUM FROM DATE YYYYMMDD
+DISPLAY "Dagens datum: "A-DATUM
+```
+
+### Inmatning forts.
+Nu ska vi hämta in ett värde från
+
+### Si eller så?
+
 01 UTVARDERING.
    05 RUBRIK.
+      10 FILLER    PIC X(8) VALUE "RAPPORT ".
       10 DATUM-RED PIC 9999/99/99.
       10 FILLER    PIC X(4) VALUE SPACE.
       10 NAMN      PIC X(40).
    05 RESULTAT.
       10 
-```
-ACCEPT DATUM FROM DATE
+      
 MOVE DATUM TO DATUM-RED
 DISPLAY DATUM-RED
 
-### Si eller så?
+COBOL har flera sådana formateringstrick, men det bör nog poängteras att numera är COBOL ett *back-end-språk* och presentationslagret skrivs sannolikt i något annat programmeringsspråk.
+
+### FizzBuzz
+Nu har du lärt dig tillräckligt mycket för att lösa den klassiska programmeringsnöten FizzBuzz.
+Låt användaren skriva in valfritt (positivt) heltal, N. För alla n 1,2,3...,N, skriv ut n. Men om n är jämnt delbart med 3, skriv istället ut "Fizz". Om n är jämnt delbart med 5, skriv istället ut "Buzz". Men om n är jämnt delbart med *både* 3 och 5, skriv istället ut "FizzBuzz".
+
+Lösningen bör se ut ungefär såhär (fast lägg till ACCEPT om användargivet N):
+```COBOL
+working-storage section.
+01 FizzBuzzGroup.
+   05 N        pic S99   comp.
+   05 DUMMY    pic S9    comp.
+   05 REM1     pic S99   comp.
+   05 REM2     pic S99   comp.
+
+procedure division.
+perform varying N from 1 by 1 until N > 20
+   divide N by 3 giving DUMMY remainder REM1
+   divide N by 5 giving DUMMY remainder REM2
+   evaluate true
+   when REM1 = 0 and REM2 = 0
+      display 'FizzBuzz'
+   when REM1 = 0
+      display 'Fizz'
+   when REM2 = 0
+      display 'Buzz'
+   when other
+      display N
+   end-evaluate
+end-perform
+```
