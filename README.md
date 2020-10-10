@@ -93,7 +93,7 @@ Innan vi kör programmet nu så måste vi ange ett namn. Det gör vi i rutan Std
 
 Execute!
 
-Ser det rätt ut så långt så **lägger vi på samma sätt till variabeln A-ALDER och hämtar in användarens ålder i koden**. **Hur ska A-ALDER vara deklarerad?**
+Ser det rätt ut så långt så **lägger vi på samma sätt till variabeln A-ALDER och hämtar in användarens ålder i koden**. **Hur ska A-ALDER vara deklarerad? Var ska användaren ange sin ålder?**
 
 ### Ett riktigt program
 Nu ska vi skriva ett riktigt program :-) Vi ska till att börja med utvärdera användarens ålder och avgöra om hon är gammal nog att få köra bil (minst arton), eller inte.
@@ -102,14 +102,14 @@ Skriv in följande i Working Storage:
 ```COBOL
 01 UTVARDERING.
    05 RUBRIK.
-      10 FILLER    PIC X(8) VALUE "RAPPORT ".
+      10 FILLER    PIC X(8)  VALUE "RAPPORT ".
       10 DATUM-RED PIC 9999/99/99.
-      10 FILLER    PIC X(4) VALUE SPACE.
+      10 FILLER    PIC X(4)  VALUE SPACE.
       10 NAMN      PIC X(40).
    05 RESULTAT.
-      10 FILLER    PIC X(7) VALUE 'Du får '.
-      10 JA-NEJ    PIC X(5) VALUE '...  '.
-      10 FILLER    PIC X(9) VALUE 'köra bil.'
+      10 FILLER    PIC X(7)  VALUE 'Du får '.
+      10 JA-NEJ    PIC X(5)  VALUE '...  '.
+      10 FILLER    PIC X(20) VALUE 'köra bil'.
 ```
 Denna grupp använder vi i vår rapport.
 "FILLER" tar upp minne, men går inte att manipulera. Vilket kan vara rätt så användbart faktiskt.
@@ -127,6 +127,7 @@ END-IF
 Lägg också till detta i koden:
 ```COBOL
 MOVE A-DATUM TO DATUM-RED
+MOVE A-NAMN  TO NAMN
 DISPLAY RUBRIK
 DISPLAY RESULTAT
 ```
@@ -163,3 +164,91 @@ perform varying N from 1 by 1 until N > 20
    end-evaluate
 end-perform
 ```
+
+### vARIANTER
+IDENTIFICATION DIVISION.
+PROGRAM-ID. HELLO-WORLD.
+DATA DIVISION.
+    WORKING-STORAGE SECTION.
+        77 X PIC 99.
+        77 Y PIC 99.
+        77 Z PIC 99.
+        
+01 A-ARBETSAREOR.
+   05 A-DATUM      PIC X(8).
+   05 A-NAMN       PIC X(40).
+   05 A-ALDER      PIC 999.
+   
+01 UTVARDERING.
+   05 RUBRIK.
+      10 FILLER    PIC X(8)  VALUE "RAPPORT ".
+      10 DATUM-RED PIC 9999/99/99.
+      10 FILLER    PIC X(4)  VALUE SPACE.
+      10 NAMN      PIC X(40).
+   05 RESULTAT.
+      10 FILLER    PIC X(30).
+         88 BIL-NEJ VALUE 'Du får INTE köra bil.'.
+         88 BIL-JA  VALUE 'Du får köra bil.'.
+      10 FILLER    PIC X(30).
+         88 SYS-NEJ VALUE 'Du får INTE gå på bolaget.'.
+         88 SYS-JA  VALUE 'Du får gå på bolaget'.
+        
+PROCEDURE DIVISION.
+MOVE 10 TO X
+ADD 1 TO X
+SUBTRACT 1 FROM X
+MULTIPLY 6 BY X
+DIVIDE X BY 3 GIVING Y REMAINDER Z
+DISPLAY "X="X " Y="Y " Z="Z
+
+MOVE 10 TO X
+COMPUTE Y = (((X + 1) - 1) * 6) / 3
+DISPLAY "Y="Y
+
+ACCEPT A-DATUM FROM DATE YYYYMMDD
+DISPLAY "Dagens datum: "A-DATUM
+
+ACCEPT A-NAMN
+ACCEPT A-ALDER
+
+SET SYS-NEJ TO TRUE
+IF A-ALDER >= 18 THEN *> Detta är en kommentar om att ">=" betyder "större än eller lika med".
+   SET BIL-JA TO TRUE
+   IF A-ALDER >= 20
+      SET SYS-JA TO TRUE
+   END-IF
+ELSE
+   SET BIL-NEJ TO TRUE
+END-IF
+
+EVALUATE A-ALDER
+WHEN 0 THRU 17
+   SET BIL-NEJ TO TRUE
+   SET SYS-NEJ TO TRUE
+WHEN 18
+WHEN 19
+   SET BIL-JA  TO TRUE
+   SET SYS-NEJ TO TRUE
+WHEN OTHER
+   SET BIL-JA TO TRUE
+   SET SYS-JA TO TRUE
+END-EVALUATE
+
+EVALUATE TRUE
+WHEN A-ALDER < 18
+   SET BIL-NEJ TO TRUE
+   SET SYS-NEJ TO TRUE
+WHEN A-ALDER >= 18 AND < 20
+   SET BIL-JA  TO TRUE
+   SET SYS-NEJ TO TRUE
+WHEN OTHER
+   SET BIL-JA  TO TRUE
+   SET SYS-JA  TO TRUE
+END-EVALUATE
+
+MOVE A-DATUM TO DATUM-RED
+MOVE A-NAMN  TO NAMN
+DISPLAY RUBRIK
+DISPLAY RESULTAT
+
+STOP RUN.
