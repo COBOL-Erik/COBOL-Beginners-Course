@@ -1,8 +1,8 @@
 # COBOL-Beginners-Course
-#### A beginners course in COBOL
+#### A beginners course in COBOL (på svenska)
 
 ### Getting started
-First of all, open up <a href="https://www.jdoodle.com/execute-cobol-online" target="_blank">jdoodle for COBOL</a> (right-click and choose Open link in new tab).
+Först, öppna <a href="https://www.jdoodle.com/execute-cobol-online" target="_blank">jdoodle for COBOL</a> (right-click and choose Open link in new tab).
 
 Then click the funny square in the middle of the page.
 
@@ -95,7 +95,7 @@ Execute!
 
 Ser det rätt ut så långt så **lägger vi på samma sätt till variabeln A-ALDER och hämtar in användarens ålder i koden**. **Hur ska A-ALDER vara deklarerad? Var ska användaren ange sin ålder?**
 
-### Ett riktigt program
+### Ett riktigt program (typ)
 Nu ska vi skriva ett riktigt program :-) Vi ska till att börja med utvärdera användarens ålder och avgöra om hon är gammal nog att få köra bil (minst arton), eller inte.
 För det måste vi förstås ta in uppgifter om användaren (*input*) och leverera en rapport (*output*).
 Skriv in följande i Working Storage:
@@ -129,7 +129,6 @@ ELSE
 END-IF
 ```
 Vill man skriva lite mindre så kan man faktiskt utesluta "THEN", det fungerar ändå.
-
 Vill man skriva lite *mera* så kan man istället på typiskt COBOL-manér skriva samma sak såhär
 ```COBOL
 IF A-ALDER IS GREATER THAN OR EQUAL TO 18 THEN
@@ -146,12 +145,12 @@ Exekvera programmet. Hur gick det?
 
 (Ser du hur datumet skrevs ut? COBOL har flera sådana formateringstrick, men det bör nog poängteras att numera är COBOL ett *backend-språk* och presentationslagret skrivs sannolikt i något annat programmeringsspråk.)
 
-### Ett riktigt program, forts.
+### Ett riktigt program (typ), forts.
 Som du kanske noterat vill vi i programmet också kunna rapportera ifall användaren är gammal nog att handla på Systembolaget.
-**Kan du lägga till en till IF i den IF vi redan har för att kunna rapportera detta korrekt?**
+**Extraövning: Kan du lägga till en till IF i den IF vi redan har för att kunna rapportera detta korrekt?**
 
 Att ha IF i IF kallas för *nästlad IF*. I detta fall var det kanske inte så farligt, men det kan ganska snabbt bli lite grötig kod om man har flera saker man måste hålla reda på i sitt program.
-Liksom i andra språk [någonting om switch] [introducera EVALUATE A-ALDER] [visa på EVALUATE TRUE]
+Liksom i andra språk (där det kanske kallas *switch*) så kan man i COBOL "välja väg" beroende på värdet på en variabel, som A-ALDER här. I COBOL gör man det med EVALUATE:
 
 ```COBOL
 EVALUATE A-ALDER
@@ -160,13 +159,17 @@ WHEN 0 THRU 17
    SET SYS-NEJ TO TRUE
 WHEN 18
 WHEN 19
-   SET BIL-JA  TO TRUE
+   SET BIL-JA  TO TRUE *> Hit kommer vi både för 18 och 19!
    SET SYS-NEJ TO TRUE
 WHEN OTHER
    SET BIL-JA TO TRUE
    SET SYS-JA TO TRUE
 END-EVALUATE
+```
 
+Men EVALUATE i COBOL är ovanligt kraftfullt! Skriver man <code>EVALUATE TRUE</code> kan man ha valfria villkor med valfria variabler!
+
+```COBOL
 EVALUATE TRUE
 WHEN A-NAMN = 'Pink Panther'
    MOVE 'Du är ju Rosa Pantern! Du står över lagen!' TO RESULTAT
@@ -182,11 +185,13 @@ WHEN OTHER
 END-EVALUATE
 ```
 
-[Intro till PERFORM!]
+(Notera att i EVALUATE är *break* inbyggt default, som det borde vara i alla andra språk också. Men som sagt, EVALUATE i COBOL är ovanligt bra ;-))
 
-### FizzBuzz
+### [Intro till PERFORM! Inte självklart hur det passar in i kursen hittills...]
+
+### FizzBuzz (extraövning)
 Nu har du lärt dig tillräckligt mycket för att lösa den klassiska programmeringsnöten FizzBuzz.
-Låt användaren skriva in valfritt (positivt) heltal, N. För alla n 1,2,3...,N, skriv ut n. Men om n är jämnt delbart med 3, skriv istället ut "Fizz". Om n är jämnt delbart med 5, skriv istället ut "Buzz". Men om n är jämnt delbart med *både* 3 och 5, skriv istället ut "FizzBuzz".
+Låt användaren skriva in valfritt (positivt) heltal, N. För alla n=1,2,3...,N, skriv ut n. Men om n är jämnt delbart med 3, skriv istället ut "Fizz". Om n är jämnt delbart med 5, skriv istället ut "Buzz". Men om n är jämnt delbart med *både* 3 och 5, skriv istället ut "FizzBuzz".
 Det ska alltså se ut såhär, för N=15:
 ```COBOL
 01
@@ -205,3 +210,5 @@ Fizz
 14
 FizzBuzz
 ```
+
+Ett lösningsförslag, FizzBuzz.cob, ligger i detta GitHub-repo, om du vill ta dig en titt.
