@@ -45,8 +45,8 @@ Och vår DISPLAY såhär:
 ```COBOL
 DISPLAY "X="X " Y="Y " Z="Z
 ```
-Vad kommer X, Y och Z ha för värden?
-Vad betyder det att Z är noll?
+**Vad kommer X, Y och Z ha för värden?**
+**Vad betyder det att Z är noll?**
 
 
 När man har att göra med mer komplicerade matematiska uttryck kan man ta till <code>COMPUTE</code>. Man kan faktiskt ersätta vår tidigare kod med följande och få samma resultat:
@@ -107,22 +107,33 @@ Skriv in följande i Working Storage:
       10 FILLER    PIC X(4)  VALUE SPACE.
       10 NAMN      PIC X(40).
    05 RESULTAT.
-      10 FILLER    PIC X(7)  VALUE 'Du får '.
-      10 JA-NEJ    PIC X(5)  VALUE '...  '.
-      10 FILLER    PIC X(20) VALUE 'köra bil'.
+      10 FILLER    PIC X(30).
+         88 BIL-NEJ VALUE 'Du får INTE köra bil.'.
+         88 BIL-JA  VALUE 'Du får köra bil.'.
+      10 FILLER    PIC X(30).
+         88 SYS-NEJ VALUE 'Du får INTE gå på bolaget.'.
+         88 SYS-JA  VALUE 'Du får gå på bolaget'.
 ```
 Denna grupp använder vi i vår rapport.
 "FILLER" tar upp minne, men går inte att manipulera. Vilket kan vara rätt så användbart faktiskt.
 
+"88" är en riktig COBOL-specialare! Dessa kan man sätta till "SANT", och då antar variabeln de hör till värdet i VALUE-satsen.
+Samtidigt sätter man andra 88-or, som har något annat värde i sin VALUE-sats, till "FALSKT".
+
 I COBOL, liksom i alla programmeringsspråk, kan man välja väg i programmet beroende på *villkor* med **_IF-THEN-ELSE_**. Det kan se ut såhär:
 ```COBOL
 IF A-ALDER >= 18 THEN *> Detta är en kommentar om att ">=" betyder "större än eller lika med".
-   CONTINUE
+   SET BIL-JA TO TRUE
 ELSE
-   MOVE 'INTE' TO JA-NEJ
+   SET BIL-NEJ TO TRUE
 END-IF
 ```
-"CONTINUE" här betyder "gör ingenting". Även det nog så användbart, tro det eller ej.
+Vill man skriva lite mindre så kan man faktiskt utesluta "THEN", det fungerar ändå.
+
+Vill man skriva lite *mera* så kan man istället på typiskt COBOL-manér skriva samma sak såhär
+```COBOL
+IF A-ALDER IS GREATER THAN OR EQUAL TO 18 THEN
+```
 
 Lägg också till detta i koden:
 ```COBOL
@@ -138,31 +149,23 @@ Exekvera programmet. Hur gick det?
 ### FizzBuzz
 Nu har du lärt dig tillräckligt mycket för att lösa den klassiska programmeringsnöten FizzBuzz.
 Låt användaren skriva in valfritt (positivt) heltal, N. För alla n 1,2,3...,N, skriv ut n. Men om n är jämnt delbart med 3, skriv istället ut "Fizz". Om n är jämnt delbart med 5, skriv istället ut "Buzz". Men om n är jämnt delbart med *både* 3 och 5, skriv istället ut "FizzBuzz".
-
-Lösningen bör se ut ungefär såhär (fast lägg till ACCEPT om användargivet N):
+Det ska alltså se ut såhär, för N=15:
 ```COBOL
-working-storage section.
-01 FizzBuzzGroup.
-   05 N        pic S99   comp.
-   05 DUMMY    pic S9    comp.
-   05 REM1     pic S99   comp.
-   05 REM2     pic S99   comp.
-
-procedure division.
-perform varying N from 1 by 1 until N > 20
-   divide N by 3 giving DUMMY remainder REM1
-   divide N by 5 giving DUMMY remainder REM2
-   evaluate true
-   when REM1 = 0 and REM2 = 0
-      display 'FizzBuzz'
-   when REM1 = 0
-      display 'Fizz'
-   when REM2 = 0
-      display 'Buzz'
-   when other
-      display N
-   end-evaluate
-end-perform
+01
+02
+Fizz
+04
+Buzz
+Fizz
+07
+08
+Fizz
+Buzz
+11
+Fizz
+13
+14
+FizzBuzz
 ```
 
 ### vARIANTER
