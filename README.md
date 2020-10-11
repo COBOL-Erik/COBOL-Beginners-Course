@@ -77,7 +77,7 @@ DISPLAY "Dagens datum: "A-DATUM
 ```
 Execute!
 
-### Inmatning forts.
+### Inmatning, forts.
 Nu ska vi hämta in ett värde från användaren av programmet. Det är du :-)
 Till gruppen A-ARBETSAREOR lägger vi till
 ```COBOL
@@ -129,7 +129,7 @@ ELSE
    SET BIL-NEJ TO TRUE
 END-IF
 ```
-Vill man skriva lite mindre så kan man faktiskt utesluta "THEN", det fungerar ändå.
+Vill man skriva lite mindre så kan man faktiskt utesluta "THEN", det fungerar ändå.<br />
 Vill man skriva lite *mera* så kan man istället på typiskt COBOL-manér skriva samma sak såhär
 ```COBOL
 IF A-ALDER IS GREATER THAN OR EQUAL TO 18 THEN
@@ -150,8 +150,8 @@ Exekvera programmet. Hur gick det?
 Som du kanske noterat vill vi i programmet också kunna rapportera ifall användaren är gammal nog att handla på Systembolaget.
 **Extraövning: Kan du lägga till en till IF i den IF vi redan har för att kunna rapportera detta korrekt?**
 
-Att ha IF i IF kallas för *nästlad IF*. I detta fall var det kanske inte så farligt, men det kan ganska snabbt bli lite grötig kod om man har flera saker man måste hålla reda på i sitt program.
-Liksom i andra språk (där det kanske kallas *switch*) så kan man i COBOL "välja väg" beroende på värdet på en variabel, som A-ALDER här. I COBOL gör man det med EVALUATE:
+Att ha IF i IF kallas för *nästlad IF*. I detta fall var det kanske inte så farligt, men det kan ganska snabbt bli lite grötig kod om man har flera saker man måste hålla reda på i sitt program.<br />
+Liksom i andra språk (där det kanske kallas *switch* eller *select*) så kan man i COBOL "välja väg" beroende på värdet på en variabel, som A-ALDER här. I COBOL gör man det med EVALUATE:
 
 ```COBOL
 EVALUATE A-ALDER
