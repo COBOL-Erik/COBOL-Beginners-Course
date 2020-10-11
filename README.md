@@ -146,6 +146,42 @@ Exekvera programmet. Hur gick det?
 
 (Ser du hur datumet skrevs ut? COBOL har flera sådana formateringstrick, men det bör nog poängteras att numera är COBOL ett *backend-språk* och presentationslagret skrivs sannolikt i något annat programmeringsspråk.)
 
+### Ett riktigt program, forts.
+Som du kanske noterat vill vi i programmet också kunna rapportera ifall användaren är gammal nog att handla på Systembolaget.
+**Kan du lägga till en till IF i den IF vi redan har för att kunna rapportera detta korrekt?**
+
+Att ha IF i IF kallas för *nästlad IF*. I detta fall var det kanske inte så farligt, men det kan ganska snabbt bli lite grötig kod om man har flera saker man måste hålla reda på i sitt program.
+Liksom i andra språk [någonting om switch] [introducera EVALUATE A-ALDER] [visa på EVALUATE TRUE]
+
+```COBOL
+EVALUATE A-ALDER
+WHEN 0 THRU 17
+   SET BIL-NEJ TO TRUE
+   SET SYS-NEJ TO TRUE
+WHEN 18
+WHEN 19
+   SET BIL-JA  TO TRUE
+   SET SYS-NEJ TO TRUE
+WHEN OTHER
+   SET BIL-JA TO TRUE
+   SET SYS-JA TO TRUE
+END-EVALUATE
+
+EVALUATE TRUE
+WHEN A-NAMN = 'Pink Panther'
+   MOVE 'Du är ju Rosa Pantern! Du står över lagen!' TO RESULTAT
+WHEN A-ALDER < 18
+   SET BIL-NEJ TO TRUE
+   SET SYS-NEJ TO TRUE
+WHEN A-ALDER >= 18 AND < 20
+   SET BIL-JA  TO TRUE
+   SET SYS-NEJ TO TRUE
+WHEN OTHER
+   SET BIL-JA  TO TRUE
+   SET SYS-JA  TO TRUE
+END-EVALUATE
+```
+
 ### FizzBuzz
 Nu har du lärt dig tillräckligt mycket för att lösa den klassiska programmeringsnöten FizzBuzz.
 Låt användaren skriva in valfritt (positivt) heltal, N. För alla n 1,2,3...,N, skriv ut n. Men om n är jämnt delbart med 3, skriv istället ut "Fizz". Om n är jämnt delbart med 5, skriv istället ut "Buzz". Men om n är jämnt delbart med *både* 3 och 5, skriv istället ut "FizzBuzz".
