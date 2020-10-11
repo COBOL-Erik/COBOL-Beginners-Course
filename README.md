@@ -2,13 +2,13 @@
 #### A beginners course in COBOL (på svenska)
 
 ### Getting started
-Först, öppna <a href="https://www.jdoodle.com/execute-cobol-online" target="_blank">jdoodle for COBOL</a> (right-click and choose Open link in new tab).
+Först, öppna <a href="https://www.jdoodle.com/execute-cobol-online" target="_blank">jdoodle for COBOL</a> (högerklicka och välj Öppna länk i ny flik).
 
-Then click the funny square in the middle of the page.
+Sen klickar vi på den skojiga kvadraten
 
 ![SquareThingy](squareThingy.PNG)
 
-This will give us a nicer layout (I think).
+Det ger en snyggare layout (tycker jag i alla fall ;-))
 
 ### Några ord om COBOL
 jdoodle ger oss lite COBOL-kod att utgå ifrån. Det är viktigt att förstå att när man ska skriva ett nytt program så börjar man aldrig från noll. På SEB genererar vi faktiskt ut massor med kod, och sen fyller man endast på med *affärslogik* som gör det programmet unikt.
