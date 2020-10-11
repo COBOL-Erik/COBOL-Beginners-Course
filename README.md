@@ -188,7 +188,36 @@ END-EVALUATE
 
 (Notera att i EVALUATE är *break* inbyggt default, som det borde vara i alla andra språk också. Men som sagt, EVALUATE i COBOL är ovanligt bra ;-))
 
-### [Intro till PERFORM! Inte självklart hur det passar in i kursen hittills...]
+### PERFORM, LENGTH OF och Reference Modification (nu blir det lite mer avancerat...)
+Ajajajaj! Nu har Marknadsföringsavdelningen kommit på att det vore suveränt om vi kunde skriva ut användarens namn *lodrätt* efter rapporten. Vilka snillen!
+Då ska vi *loopa* genom hela variabeln och skriva ut ett tecken i taget på egna rader. Men hur stort är minnet för en variabel? Det kan man förstås se i Working Storage, men vi vill skriva robust kod som står sig även om variabeldeklarationen skulle förändras. Därför använder vi oss av <code>LENGTH OF variabel</code> som alltid ger antalet bytes minne variabeln har. Det kan vi testa med denna kodrad:
+```COBOL
+DISPLAY LENGTH OF NAMN
+```
+Vad blev det?
+
+Vill man endast åt några tecken i en sträng så kan man ange det genom att lägga till en parentes till variabeln och peka ut vilka tecken man vill jobba med, såhär:
+```COBOL
+DISPLAY NAMN(3:5)
+```
+vilket i detta exempel innebär att vi skriver ut tecken 3-7 av NAMN (vi börjar på det tredje tecknet och tar totalt fem tecken).<br />
+Vill man åt alla tecken från och med en position X skriver man <code>variabel(X:)</code>.<br />
+Detta kallas i COBOL (lite snofsigt) för *Reference Modification*.<br />
+Notera att vi i COBOL börjar *indexeringen* med 1 och inte 0 som i många andra språk. Det är *mycket* lättare så!
+
+För att skapa en loop i COBOL använder man sig av <code>PERFORM</code>. Men där man i alla språk loopar *så länge som* ett villkor är uppfyllt loopar man i COBOL *tills* ett villkor blir sant(!) Så inget "while" utan istället "UNTIL", t ex <code>PERFORM UNTIL X > LENGTH OF NAMN</code>. **Vad betyder det?**
+
+Så nu vill vi stega fram variabeln X, som är vår position i NAMN, och skriva ut tecknet där. Det kan vi göra med följande kod:
+
+```COBOL
+PERFORM VARYING X FROM 1 BY 1 UNTIL X > LENGTH OF NAMN
+   IF NAMN(X:) = SPACE *> Om resten av NAMN är tomt ...
+      EXIT PERFORM     *> ... så hoppar vi ut ur loopen
+   END-IF
+   DISPLAY NAMN(X:1)   *> Vi skriver ut ett tecken i NAMN
+END-PERFORM
+```
+Häftigt, eller hur?!
 
 ### FizzBuzz (extraövning)
 Nu har du lärt dig tillräckligt mycket för att lösa den klassiska programmeringsnöten FizzBuzz.
