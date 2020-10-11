@@ -13,7 +13,7 @@ Det ger en snyggare layout (tycker jag i alla fall ;-))
 ### Några ord om COBOL
 jdoodle ger oss lite COBOL-kod att utgå ifrån. Det är viktigt att förstå att när man ska skriva ett nytt program så börjar man aldrig från noll. På SEB genererar vi faktiskt ut massor med kod, och sen fyller man endast på med *affärslogik* som gör det programmet unikt.
 
-Ser koden kanske lite konstigt ut? När man designade språket COBOL var det viktigt att det skulle likna vanlig engelska. Därför är språket indelat i *divisioner*, *sektioner*, *paragrafer* och *meningar*. Ser ni DIVISION och SECTION någonstans i koden? Det finns inga paragrafer här, men varje kodrad avslutas med en punkt – meningar. Men på SEB har vi endast några specialparagrafer och vi avslutar INTE varje kodrad med punkt – det ställer bara till det. Man kan kanske säga att vi skriver meningslösa program ;-)
+Ser koden kanske lite konstig ut? När man designade språket COBOL var det viktigt att det skulle likna vanlig engelska. Därför är språket indelat i *divisioner*, *sektioner*, *paragrafer* och *meningar*. Ser ni DIVISION och SECTION någonstans i koden? Det finns inga paragrafer här, men varje kodrad avslutas med en punkt – meningar. Men på SEB har vi endast några specialparagrafer och vi avslutar INTE varje kodrad med punkt – det ställer bara till det. Man kan kanske säga att vi skriver meningslösa program ;-)
 
 Det är alltså meningen att det ska vara lätt att läsa COBOL. Det syns inte minst i kodraden
 <code>ADD X Y GIVING Z</code>. Ganska självklart vad som händer här, inte sant?
