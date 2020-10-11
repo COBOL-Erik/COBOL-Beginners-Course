@@ -182,6 +182,8 @@ WHEN OTHER
 END-EVALUATE
 ```
 
+[Intro till PERFORM!]
+
 ### FizzBuzz
 Nu har du lärt dig tillräckligt mycket för att lösa den klassiska programmeringsnöten FizzBuzz.
 Låt användaren skriva in valfritt (positivt) heltal, N. För alla n 1,2,3...,N, skriv ut n. Men om n är jämnt delbart med 3, skriv istället ut "Fizz". Om n är jämnt delbart med 5, skriv istället ut "Buzz". Men om n är jämnt delbart med *både* 3 och 5, skriv istället ut "FizzBuzz".
@@ -203,91 +205,3 @@ Fizz
 14
 FizzBuzz
 ```
-
-### vARIANTER
-IDENTIFICATION DIVISION.
-PROGRAM-ID. HELLO-WORLD.
-DATA DIVISION.
-    WORKING-STORAGE SECTION.
-        77 X PIC 99.
-        77 Y PIC 99.
-        77 Z PIC 99.
-        
-01 A-ARBETSAREOR.
-   05 A-DATUM      PIC X(8).
-   05 A-NAMN       PIC X(40).
-   05 A-ALDER      PIC 999.
-   
-01 UTVARDERING.
-   05 RUBRIK.
-      10 FILLER    PIC X(8)  VALUE "RAPPORT ".
-      10 DATUM-RED PIC 9999/99/99.
-      10 FILLER    PIC X(4)  VALUE SPACE.
-      10 NAMN      PIC X(40).
-   05 RESULTAT.
-      10 FILLER    PIC X(30).
-         88 BIL-NEJ VALUE 'Du får INTE köra bil.'.
-         88 BIL-JA  VALUE 'Du får köra bil.'.
-      10 FILLER    PIC X(30).
-         88 SYS-NEJ VALUE 'Du får INTE gå på bolaget.'.
-         88 SYS-JA  VALUE 'Du får gå på bolaget'.
-        
-PROCEDURE DIVISION.
-MOVE 10 TO X
-ADD 1 TO X
-SUBTRACT 1 FROM X
-MULTIPLY 6 BY X
-DIVIDE X BY 3 GIVING Y REMAINDER Z
-DISPLAY "X="X " Y="Y " Z="Z
-
-MOVE 10 TO X
-COMPUTE Y = (((X + 1) - 1) * 6) / 3
-DISPLAY "Y="Y
-
-ACCEPT A-DATUM FROM DATE YYYYMMDD
-DISPLAY "Dagens datum: "A-DATUM
-
-ACCEPT A-NAMN
-ACCEPT A-ALDER
-
-SET SYS-NEJ TO TRUE
-IF A-ALDER >= 18 THEN *> Detta är en kommentar om att ">=" betyder "större än eller lika med".
-   SET BIL-JA TO TRUE
-   IF A-ALDER >= 20
-      SET SYS-JA TO TRUE
-   END-IF
-ELSE
-   SET BIL-NEJ TO TRUE
-END-IF
-
-EVALUATE A-ALDER
-WHEN 0 THRU 17
-   SET BIL-NEJ TO TRUE
-   SET SYS-NEJ TO TRUE
-WHEN 18
-WHEN 19
-   SET BIL-JA  TO TRUE
-   SET SYS-NEJ TO TRUE
-WHEN OTHER
-   SET BIL-JA TO TRUE
-   SET SYS-JA TO TRUE
-END-EVALUATE
-
-EVALUATE TRUE
-WHEN A-ALDER < 18
-   SET BIL-NEJ TO TRUE
-   SET SYS-NEJ TO TRUE
-WHEN A-ALDER >= 18 AND < 20
-   SET BIL-JA  TO TRUE
-   SET SYS-NEJ TO TRUE
-WHEN OTHER
-   SET BIL-JA  TO TRUE
-   SET SYS-JA  TO TRUE
-END-EVALUATE
-
-MOVE A-DATUM TO DATUM-RED
-MOVE A-NAMN  TO NAMN
-DISPLAY RUBRIK
-DISPLAY RESULTAT
-
-STOP RUN.
